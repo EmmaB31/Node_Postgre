@@ -35,6 +35,14 @@ router.post('/', (req, res) => {
 });
 
 // PUT /:id Edit one user with id
+router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const {first_name} = req.body;
+    pool
+    .query('UPDATE users SET first_name=$1 WHERE id=$2 RETURNING *;', [first_name, id])
+    .then(({rows}) => res.json(rows))
+    .catch(e => res.sendStatus(500))
+})
 
 //DELETE /:id Delete user with id
 module.exports = router
