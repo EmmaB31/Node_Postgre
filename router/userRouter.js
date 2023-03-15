@@ -13,6 +13,13 @@ router.get('/', (req, res) => {
 });
  
 // GET /:id single user
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+    pool
+    .query('SELECT * FROM users WHERE id=$1', [id])
+    .then(({rows}) => res.json(rows))
+    .catch(e => res.sendStatus(500))
+})
 
 // POST Create new user
 
