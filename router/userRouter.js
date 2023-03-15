@@ -45,4 +45,12 @@ router.put('/:id', (req, res) => {
 })
 
 //DELETE /:id Delete user with id
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    pool
+    .query('DELETE FROM users WHERE id=$1;', [id])
+    .then(({rows}) => res.json(rows))
+    .catch(e => res.sendStatus(500))
+})
+
 module.exports = router
