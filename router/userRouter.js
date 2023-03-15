@@ -22,6 +22,17 @@ router.get('/:id', (req, res) => {
 })
 
 // POST Create new user
+router.post('/', (req, res) => {
+    const {first_name, 
+        last_name, 
+        age, 
+        active
+    } = req.body;
+    pool
+    .query('INSERT INTO users (first_name, last_name, age, active) VALUES ($1, $2, $3, $4) RETURNING *;', [first_name, last_name, age, active])
+    .then(({rows}) => res.json(rows))
+    .catch(e => res.sendStatus(500))
+});
 
 // PUT /:id Edit one user with id
 
